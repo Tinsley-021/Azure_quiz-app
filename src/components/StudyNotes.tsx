@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { ArrowLeft, BookOpen, CheckCircle2, GraduationCap, Lightbulb, FileText, Moon } from 'lucide-react';
+import { ArrowLeft, BookOpen, CheckCircle2, GraduationCap, Lightbulb, FileText, Moon, Sun } from 'lucide-react';
 import { topics, type TopicId } from '@/data/questions';
 import { getStudyNotesByTopic } from '@/data/studyNotes';
 import { useProgress } from '@/hooks/useProgress';

@@ -17,10 +17,12 @@ import {
   Layers,
   AlertCircle,
   Medal,
+  LogOut,
   type LucideIcon,
 } from 'lucide-react';
 import { topics, type TopicId } from '@/data/questions';
 import { useProgress } from '@/hooks/useProgress';
+import { useAuth } from '@/hooks/useAuth';
 import type { View } from '@/App';
 import ThemeToggle from '@/components/ThemeToggle';
 
@@ -48,7 +50,9 @@ export default function Dashboard({
   onNavigate: (view: View) => void;
 }) {
   const { progress, attempts, loading, readinessScore, unlockedBadges, wrongQuestions } = useProgress();
+  const { displayName, signOut } = useAuth();
   const [selectedMode, setSelectedMode] = useState<'quiz' | 'notes'>('quiz');
+  const capitalized = displayName.charAt(0).toUpperCase() + displayName.slice(1);
 
   const score = readinessScore();
   const readinessLabel =
@@ -91,11 +95,33 @@ export default function Dashboard({
               <Trophy className="w-4 h-4" />
               <span className="text-sm font-semibold">{score}%</span>
             </div>
+            <button
+              onClick={signOut}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-100 text-slate-600 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-400 dark:hover:bg-slate-700 transition-colors"
+              aria-label="Sign out"
+            >
+              <LogOut className="w-4 h-4" />
+            </button>
           </div>
         </div>
       </header>
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8 space-y-8">
+        {/* Welcome greeting */}
+        <div className="flex items-center gap-3">
+          <div className="w-12 h-12 rounded-full bg-gradient-to-br from-sky-500 to-blue-700 flex items-center justify-center text-white font-bold text-lg shadow-lg shadow-sky-500/20">
+            {capitalized.charAt(0) || '?'}
+          </div>
+          <div>
+            <h2 className="text-xl font-bold text-slate-900 dark:text-slate-100">
+              Welcome back, {capitalized || 'there'}!
+            </h2>
+            <p className="text-sm text-slate-500 dark:text-slate-400">
+              {totalAttempts === 0 ? 'Ready to start your AZ-900 journey?' : totalAttempts === 1 ? 'Great start! Keep the momentum going.' : `You've taken ${totalAttempts} quiz${totalAttempts === 1 ? '' : 'es'} so far.`}
+            </p>
+          </div>
+        </div>
+
         {/* Readiness Score */}
         <section className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden transition-colors duration-300">
           <div className="grid md:grid-cols-3 gap-0">

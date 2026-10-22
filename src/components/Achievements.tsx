@@ -1,4 +1,4 @@
-import { ArrowLeft, Lock, Moon } from 'lucide-react';
+import { ArrowLeft, Lock, Moon, Sun } from 'lucide-react';
 import * as LucideIcons from 'lucide-react';
 import { badges, tierColors } from '@/data/achievements';
 import { useProgress } from '@/hooks/useProgress';

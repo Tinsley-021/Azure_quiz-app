@@ -1,14 +1,23 @@
 import { useState, useEffect, useCallback } from 'react';
 import { supabase, type QuizAttempt, type StudyProgress } from '@/lib/supabase';
 import type { TopicId } from '@/data/questions';
+import { useAuth } from '@/hooks/useAuth';
 
 export function useProgress() {
+  const { user } = useAuth();
   const [progress, setProgress] = useState<Record<string, StudyProgress>>({});
   const [attempts, setAttempts] = useState<QuizAttempt[]>([]);
   const [unlockedBadges, setUnlockedBadges] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
 
   const fetchProgress = useCallback(async () => {
+    if (!user) {
+      setProgress({});
+      setAttempts([]);
+      setUnlockedBadges([]);
+      setLoading(false);
+      return;
+    }
     setLoading(true);
     const [progRes, attemptRes, badgeRes] = await Promise.all([
       supabase.from('study_progress').select('*'),
@@ -33,8 +42,15 @@ export function useProgress() {
   }, []);
 
   useEffect(() => {
-    fetchProgress();
-  }, [fetchProgress]);
+    if (user) {
+      fetchProgress();
+    } else {
+      setProgress({});
+      setAttempts([]);
+      setUnlockedBadges([]);
+      setLoading(false);
+    }
+  }, [user, fetchProgress]);
 
   const unlockBadge = useCallback(
     async (badgeId: string) => {

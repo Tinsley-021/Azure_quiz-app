@@ -5,11 +5,14 @@ import StudyNotesView from '@/components/StudyNotes';
 import History from '@/components/History';
 import Flashcards from '@/components/Flashcards';
 import Achievements from '@/components/Achievements';
+import AuthScreen from '@/components/AuthScreen';
+import { useAuth } from '@/hooks/useAuth';
 import type { TopicId } from '@/data/questions';
 
 export type View = 'dashboard' | 'quiz' | 'notes' | 'history' | 'full-exam' | 'flashcards' | 'achievements' | 'review-mistakes';
 
 export default function App() {
+  const { user, loading } = useAuth();
   const [view, setView] = useState<View>('dashboard');
   const [activeTopic, setActiveTopic] = useState<TopicId | null>(null);
 
@@ -38,6 +41,18 @@ export default function App() {
     window.addEventListener('navigate-quiz', handler);
     return () => window.removeEventListener('navigate-quiz', handler);
   }, []);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex items-center justify-center transition-colors duration-300">
+        <div className="w-8 h-8 border-3 border-slate-300 dark:border-slate-700 border-t-sky-500 rounded-full animate-spin" />
+      </div>
+    );
+  }
+
+  if (!user) {
+    return <AuthScreen />;
+  }
 
   if (view === 'quiz') {
     return <Quiz topic={activeTopic} mode="topic" onBack={handleBack} onStudyNotes={handleStudyNotes} />;

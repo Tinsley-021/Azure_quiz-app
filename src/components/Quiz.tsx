@@ -12,6 +12,7 @@ import {
   GraduationCap,
   AlertCircle,
   Moon,
+  Sun,
 } from 'lucide-react';
 import {
   questions,

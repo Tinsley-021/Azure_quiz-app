@@ -1,4 +1,4 @@
-import { ArrowLeft, Clock, TrendingUp, Award, Moon } from 'lucide-react';
+import { ArrowLeft, Clock, TrendingUp, Award, Moon, Sun } from 'lucide-react';
 import { topics, type TopicId } from '@/data/questions';
 import { useProgress } from '@/hooks/useProgress';
 import { useTheme } from '@/hooks/useTheme';

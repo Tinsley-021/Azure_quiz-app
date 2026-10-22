@@ -9,6 +9,7 @@ import {
   Brain,
   Shuffle,
   Moon,
+  Sun,
 } from 'lucide-react';
 import { topics, type TopicId } from '@/data/questions';
 import { flashcards } from '@/data/achievements';

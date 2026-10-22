@@ -7,6 +7,7 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 export interface QuizAttempt {
   id?: string;
+  user_id?: string;
   topic: string;
   score: number;
   total: number;
@@ -17,6 +18,7 @@ export interface QuizAttempt {
 
 export interface StudyProgress {
   id?: string;
+  user_id?: string;
   topic: string;
   attempts: number;
   best_score: number;
@@ -27,6 +29,7 @@ export interface StudyProgress {
 
 export interface Achievement {
   id?: string;
+  user_id?: string;
   badge_id: string;
   unlocked_at?: string;
 }
